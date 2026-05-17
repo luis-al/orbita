@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 1000px;
+    height: auto;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
