@@ -1,22 +1,72 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orbita9</title>
-    
-  <meta name="description" content="Orbita9: Desarrollo de webs y aplicaciones IA innovadoras en Barcelona. Soluciones
-  tecnológicas a medida para impulsar tu negocio digital. Descubre nuestro trabajo.">
-  <meta name="keywords" content="Orbita9, Barcelona, desarrollo web, aplicaciones IA, inteligencia artificial, diseño
-  responsive, tecnología innovadora, soluciones digitales, agencia tecnológica Barcelona">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbita9</title>
+
+<meta name="description" content="Orbita9: Desarrollo de webs y aplicaciones IA innovadoras en Barcelona. Soluciones
+tecnológicas a medida para impulsar tu negocio digital. Descubre nuestro trabajo.">
+<meta name="keywords" content="Orbita9, Barcelona, desarrollo web, aplicaciones IA, inteligencia artificial, diseño
+responsive, tecnología innovadora, soluciones digitales, agencia tecnológica Barcelona">
+
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- SECTION 1: boot / hero video (lo que ya existía) -->
+  <section class="hero">
     <div class="video-container">
-        <video autoplay muted loop playsinline>
-            <source src="/final-animation.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-        </video>
+      <video autoplay muted loop playsinline>
+        <source src="final-animation.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
     </div>
+    <button class="scroll-cue" aria-label="Bajar">
+      <span></span><span></span><span></span>
+    </button>
+  </section>
+
+  <!-- SECTION 2: orbit field -> reveal del boton de contacto -->
+  <section class="orbit-field" id="orbit-field">
+    <div class="orbit-sticky">
+      <div class="scanlines"></div>
+      <div class="stars"></div>
+      <div class="grid-floor"></div>
+
+      <div class="orbit-stage" id="orbit-stage">
+        <!-- logos pixel-art inyectados por JS -->
+      </div>
+
+      <div class="logo-halo" id="logo-halo">
+        <!-- logos reales (vector, no pixel) inyectados por JS -->
+      </div>
+
+      <a class="contact-btn" id="contact-btn" href="mailto:lapbcn@outlook.es" aria-label="Contactar por email">
+        <svg viewBox="0 0 16 16" class="pixel-icon icon-mail" shape-rendering="crispEdges">
+          <rect x="1" y="3" width="14" height="10" class="c-body"/>
+          <rect x="1" y="3" width="14" height="1" class="c-line"/>
+          <rect x="1" y="12" width="14" height="1" class="c-line"/>
+          <rect x="1" y="3" width="1" height="10" class="c-line"/>
+          <rect x="14" y="3" width="1" height="10" class="c-line"/>
+          <rect x="2" y="4" width="1" height="1" class="c-line"/>
+          <rect x="13" y="4" width="1" height="1" class="c-line"/>
+          <rect x="3" y="5" width="1" height="1" class="c-line"/>
+          <rect x="12" y="5" width="1" height="1" class="c-line"/>
+          <rect x="4" y="6" width="1" height="1" class="c-line"/>
+          <rect x="11" y="6" width="1" height="1" class="c-line"/>
+          <rect x="5" y="7" width="1" height="1" class="c-line"/>
+          <rect x="10" y="7" width="1" height="1" class="c-line"/>
+          <rect x="6" y="8" width="1" height="1" class="c-line"/>
+          <rect x="9" y="8" width="1" height="1" class="c-line"/>
+          <rect x="7" y="9" width="2" height="1" class="c-line"/>
+        </svg>
+        <span class="ring"></span>
+        <span class="ring ring-2"></span>
+      </a>
+    </div>
+  </section>
+
+<script src="script.js"></script>
 </body>
 </html>

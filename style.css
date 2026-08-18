@@ -1,26 +1,229 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root{
+  --void:#0b0620;
+  --panel:#160b2e;
+  --pink:#ff2e93;
+  --cyan:#2de2ff;
+  --yellow:#ffd23f;
+  --green:#5cffb1;
+  --purple:#a56bff;
+  --ink:#f2eaff;
 }
 
-body {
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    overflow: hidden;
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ background:#000; }
+
+body{
+  background:#000;
+  color:var(--ink);
+  font-family:'Space Mono', 'Courier New', monospace;
 }
 
-.video-container {
-    width: 100%;
-    max-width: 1000px;
-    height: auto;
+/* ---------- SECTION 1: hero video (lo que ya existia) ---------- */
+
+.hero{
+  position:relative;
+  width:100%;
+  height:100vh;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
 }
 
-video {
-    width: 100%;
-    height: auto;
-    display: block;
+.video-container{
+  width:100%;
+  max-width:1000px;
+  height:auto;
+}
+
+.video-container video{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+.scroll-cue{
+  position:absolute;
+  left:50%;
+  bottom:34px;
+  transform:translateX(-50%);
+  width:34px;
+  height:34px;
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:0;
+}
+.scroll-cue span{
+  display:block;
+  width:14px;
+  height:14px;
+  margin:0 auto;
+  border-right:3px solid var(--cyan);
+  border-bottom:3px solid var(--cyan);
+  transform:rotate(45deg);
+  opacity:0;
+  animation:cue-fall 1.6s ease-in-out infinite;
+  filter:drop-shadow(0 0 4px var(--cyan));
+}
+.scroll-cue span:nth-child(2){ animation-delay:0.15s; margin-top:-8px; }
+.scroll-cue span:nth-child(3){ animation-delay:0.3s; margin-top:-8px; }
+@keyframes cue-fall{
+  0%{ opacity:0; transform:translateY(-8px) rotate(45deg); }
+  35%{ opacity:1; }
+  70%{ opacity:1; }
+  100%{ opacity:0; transform:translateY(10px) rotate(45deg); }
+}
+
+/* ---------- SECTION 2: orbit field ---------- */
+
+.orbit-field{
+  position:relative;
+  height:400vh; /* distancia de scroll que controla la animacion */
+  background:linear-gradient(180deg,#0b0620 0%, #100833 40%, #0b0620 100%);
+}
+
+.orbit-sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow:hidden;
+}
+
+.scanlines{
+  position:absolute; inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.18) 3px, rgba(0,0,0,0.18) 4px
+  );
+  pointer-events:none;
+  z-index:10;
+  mix-blend-mode:multiply;
+}
+
+.stars{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 80% 10%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 30% 80%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 90% 60%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 45% 35%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 15% 55%, #fff 100%, transparent 100%),
+    radial-gradient(1px 1px at 70% 90%, #fff 100%, transparent 100%);
+  opacity:0.5;
+  z-index:0;
+}
+
+.grid-floor{
+  position:absolute;
+  bottom:0; left:0; right:0;
+  height:40%;
+  background-image:
+    linear-gradient(rgba(45,226,255,0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(45,226,255,0.35) 1px, transparent 1px);
+  background-size:60px 40px;
+  transform:perspective(280px) rotateX(60deg);
+  transform-origin:bottom;
+  mask-image:linear-gradient(to top, black 20%, transparent 95%);
+  z-index:1;
+}
+
+.orbit-stage{
+  position:absolute;
+  inset:0;
+  z-index:5;
+}
+
+.orbit-logo{
+  position:absolute;
+  top:50%; left:50%;
+  width:56px;
+  height:56px;
+  will-change:transform, opacity;
+  filter:drop-shadow(0 0 6px currentColor);
+}
+.orbit-logo svg{ width:100%; height:100%; display:block; }
+
+.logo-halo{
+  position:absolute;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%) translateY(-170px);
+  display:flex;
+  gap:26px;
+  z-index:15;
+  pointer-events:none;
+}
+.halo-logo{
+  width:42px; height:42px;
+  padding:5px;
+  box-sizing:border-box;
+  will-change:transform, opacity, filter;
+}
+.halo-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+
+@media (max-width:640px){
+  .logo-halo{ transform:translate(-50%,-50%) translateY(-130px); gap:14px; }
+  .halo-logo{ width:30px; height:30px; }
+}
+
+/* ---------- contact button ---------- */
+
+.contact-btn{
+  position:absolute;
+  top:50%; left:50%;
+  width:96px; height:96px;
+  transform:translate(-50%,-50%) scale(0.2);
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #1e1140, var(--void) 70%);
+  border:3px solid var(--pink);
+  box-shadow:0 0 0 rgba(255,46,147,0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:20;
+  text-decoration:none;
+  opacity:0;
+  pointer-events:none;
+  transition:box-shadow 0.3s ease;
+}
+.contact-btn.is-live{
+  pointer-events:auto;
+  animation:btn-pulse 2.2s ease-in-out infinite;
+}
+
+.pixel-icon{ width:34px; height:34px; position:relative; z-index:2; }
+.pixel-icon rect.c-body{ fill:transparent; }
+.pixel-icon rect.c-line{ fill:var(--cyan); }
+
+.ring{
+  position:absolute;
+  inset:-14px;
+  border-radius:50%;
+  border:1px solid var(--cyan);
+  opacity:0;
+}
+.ring-2{ inset:-28px; border-color:var(--purple); }
+.contact-btn.is-live .ring{ animation:ring-spin 6s linear infinite, ring-fade 2.2s ease-in-out infinite; }
+.contact-btn.is-live .ring-2{ animation:ring-spin 9s linear infinite reverse, ring-fade 2.2s ease-in-out infinite; }
+
+@keyframes ring-spin{ to{ transform:rotate(360deg); } }
+@keyframes ring-fade{ 0%,100%{ opacity:0.25; } 50%{ opacity:0.7; } }
+
+@keyframes btn-pulse{
+  0%,100%{ box-shadow:0 0 20px 2px rgba(255,46,147,0.4); }
+  50%{ box-shadow:0 0 40px 10px rgba(255,46,147,0.7); }
+}
+
+.contact-btn:hover .pixel-icon rect.c-line{ fill:var(--yellow); }
+.contact-btn:hover{ border-color:var(--yellow); }
+
+@media (max-width:600px){
+  .orbit-logo{ width:38px; height:38px; }
+  .contact-btn{ width:78px; height:78px; }
+  .pixel-icon{ width:26px; height:26px; }
 }
