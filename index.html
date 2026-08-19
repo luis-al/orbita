@@ -10,7 +10,7 @@ tecnológicas a medida para impulsar tu negocio digital. Descubre nuestro trabaj
 <meta name="keywords" content="Orbita9, Barcelona, desarrollo web, aplicaciones IA, inteligencia artificial, diseño
 responsive, tecnología innovadora, soluciones digitales, agencia tecnológica Barcelona">
 
-<link rel="stylesheet" href="style.css?v=20260819">
+<link rel="stylesheet" href="style.css?v=20260819b">
 </head>
 <body>
 
@@ -42,7 +42,7 @@ responsive, tecnología innovadora, soluciones digitales, agencia tecnológica B
         <!-- logos reales (vector, no pixel) inyectados por JS -->
       </div>
 
-      <a class="contact-btn" id="contact-btn" href="mailto:lapbcn@outlook.es" aria-label="Contactar por email">
+      <button class="contact-btn" id="contact-btn" type="button" aria-label="Abrir formulario de contacto" aria-haspopup="dialog">
         <svg viewBox="0 0 16 16" class="pixel-icon icon-mail" shape-rendering="crispEdges">
           <rect x="1" y="3" width="14" height="10" class="c-body"/>
           <rect x="1" y="3" width="14" height="1" class="c-line"/>
@@ -63,10 +63,43 @@ responsive, tecnología innovadora, soluciones digitales, agencia tecnológica B
         </svg>
         <span class="ring"></span>
         <span class="ring ring-2"></span>
-      </a>
+      </button>
     </div>
   </section>
 
-<script src="script.js?v=20260819"></script>
+  <!-- SECTION 3: panel de contacto retro (terminal 80s) -->
+  <div class="contact-panel" id="contact-panel" aria-hidden="true">
+    <div class="contact-backdrop" id="contact-backdrop"></div>
+    <div class="terminal-window" role="dialog" aria-modal="true" aria-labelledby="terminal-title">
+      <div class="terminal-titlebar">
+        <span class="terminal-dot dot-pink"></span>
+        <span class="terminal-dot dot-yellow"></span>
+        <span class="terminal-dot dot-green"></span>
+        <span class="terminal-title" id="terminal-title">ORBITA9_MAILER.EXE</span>
+        <button class="terminal-close" id="contact-close" type="button" aria-label="Cerrar">X</button>
+      </div>
+      <div class="terminal-body">
+        <p class="terminal-line">&gt; INICIANDO PROTOCOLO DE CONTACTO<span class="blink">_</span></p>
+        <p class="terminal-line">&gt; INTRODUCE TUS DATOS PARA ENVIAR TRANSMISION:</p>
+
+        <form id="contact-form" class="terminal-form" autocomplete="off">
+          <label class="terminal-label" for="cf-email">EMAIL_REMITENTE:</label>
+          <input class="terminal-input" type="email" id="cf-email" name="email" required placeholder="tu@email.com">
+
+          <label class="terminal-label" for="cf-message">MENSAJE:</label>
+          <textarea class="terminal-input terminal-textarea" id="cf-message" name="message" required rows="5" placeholder="Escribe tu consulta aqui..."></textarea>
+
+          <input type="text" name="_gotcha" class="terminal-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+          <button type="submit" class="terminal-submit" id="cf-submit">
+            <span>&gt; TRANSMITIR_MENSAJE</span>
+          </button>
+          <p class="terminal-status" id="cf-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js?v=20260819b"></script>
 </body>
 </html>

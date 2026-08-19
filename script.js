@@ -11,6 +11,78 @@
     field.scrollIntoView({ behavior: "smooth" });
   });
 
+  // ---- panel de contacto retro (terminal 80s) ----
+  var FORMSPREE_ENDPOINT = "https://formspree.io/f/xwlewgwe";
+
+  var panel = document.getElementById("contact-panel");
+  var backdrop = document.getElementById("contact-backdrop");
+  var closeBtn = document.getElementById("contact-close");
+  var form = document.getElementById("contact-form");
+  var status = document.getElementById("cf-status");
+  var submitBtn = document.getElementById("cf-submit");
+
+  function openPanel() {
+    panel.classList.add("is-open");
+    panel.setAttribute("aria-hidden", "false");
+    document.getElementById("cf-email").focus();
+  }
+
+  function closePanel() {
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
+  }
+
+  btn.addEventListener("click", openPanel);
+  closeBtn.addEventListener("click", closePanel);
+  backdrop.addEventListener("click", closePanel);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && panel.classList.contains("is-open")) closePanel();
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (form._gotcha.value) {
+      status.textContent = "> MENSAJE TRANSMITIDO CON EXITO.";
+      status.className = "terminal-status is-success";
+      form.reset();
+      return;
+    }
+
+    if (FORMSPREE_ENDPOINT.indexOf("REEMPLAZAR_ID") !== -1) {
+      status.textContent = "> ERROR: FORMULARIO SIN CONFIGURAR TODAVIA.";
+      status.className = "terminal-status is-error";
+      return;
+    }
+
+    submitBtn.disabled = true;
+    status.textContent = "> ENVIANDO TRANSMISION...";
+    status.className = "terminal-status";
+
+    fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    })
+      .then(function (res) {
+        if (res.ok) {
+          status.textContent = "> MENSAJE TRANSMITIDO CON EXITO. GRACIAS.";
+          status.className = "terminal-status is-success";
+          form.reset();
+        } else {
+          status.textContent = "> ERROR EN LA TRANSMISION. INTENTA DE NUEVO.";
+          status.className = "terminal-status is-error";
+        }
+      })
+      .catch(function () {
+        status.textContent = "> ERROR DE CONEXION. INTENTA DE NUEVO.";
+        status.className = "terminal-status is-error";
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
+  });
+
   // ---- pixel-art logo bitmaps (8x8), estilo neon retro ----
   var LOGOS = [
     {
