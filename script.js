@@ -5,13 +5,12 @@
 
   var stage = document.getElementById("orbit-stage");
   var field = document.getElementById("orbit-field");
-  var btn = document.getElementById("contact-btn");
 
   document.querySelector(".scroll-cue").addEventListener("click", function () {
     field.scrollIntoView({ behavior: "smooth" });
   });
 
-  // ---- panel de contacto retro (terminal 80s) ----
+  // ---- panel de contacto retro general (terminal 80s) ----
   var FORMSPREE_ENDPOINT = "https://formspree.io/f/xwlewgwe";
 
   var panel = document.getElementById("contact-panel");
@@ -32,7 +31,6 @@
     panel.setAttribute("aria-hidden", "true");
   }
 
-  btn.addEventListener("click", openPanel);
   closeBtn.addEventListener("click", closePanel);
   backdrop.addEventListener("click", closePanel);
   document.addEventListener("keydown", function (e) {
@@ -82,6 +80,141 @@
         submitBtn.disabled = false;
       });
   });
+
+  // ---- panel de intake del diagnostico IA ----
+  var diagPanel = document.getElementById("diagnostico-panel");
+  var diagBackdrop = document.getElementById("diagnostico-backdrop");
+  var diagClose = document.getElementById("diagnostico-close");
+  var diagCta = document.getElementById("diagnostico-cta");
+  var diagForm = document.getElementById("diagnostico-form");
+  var diagStatus = document.getElementById("df-status");
+  var diagSubmit = document.getElementById("df-submit");
+
+  function openDiagPanel() {
+    diagPanel.classList.add("is-open");
+    diagPanel.setAttribute("aria-hidden", "false");
+    document.getElementById("df-email").focus();
+  }
+
+  function closeDiagPanel() {
+    diagPanel.classList.remove("is-open");
+    diagPanel.setAttribute("aria-hidden", "true");
+  }
+
+  diagCta.addEventListener("click", openDiagPanel);
+  diagClose.addEventListener("click", closeDiagPanel);
+  diagBackdrop.addEventListener("click", closeDiagPanel);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && diagPanel.classList.contains("is-open")) closeDiagPanel();
+  });
+
+  diagForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (diagForm._gotcha.value) {
+      diagStatus.textContent = "> SOLICITUD RECIBIDA. TE CONTACTAREMOS EN BREVE.";
+      diagStatus.className = "terminal-status is-success";
+      diagForm.reset();
+      return;
+    }
+
+    if (FORMSPREE_ENDPOINT.indexOf("REEMPLAZAR_ID") !== -1) {
+      diagStatus.textContent = "> ERROR: FORMULARIO SIN CONFIGURAR TODAVIA.";
+      diagStatus.className = "terminal-status is-error";
+      return;
+    }
+
+    diagSubmit.disabled = true;
+    diagStatus.textContent = "> ENVIANDO DATOS...";
+    diagStatus.className = "terminal-status";
+
+    fetch(FORMSPREE_ENDPOINT, {
+      method: "POST",
+      body: new FormData(diagForm),
+      headers: { Accept: "application/json" }
+    })
+      .then(function (res) {
+        if (res.ok) {
+          diagStatus.textContent = "> SOLICITUD RECIBIDA. TE CONTACTAREMOS EN BREVE CON TU DIAGNOSTICO.";
+          diagStatus.className = "terminal-status is-success";
+          diagForm.reset();
+        } else {
+          diagStatus.textContent = "> ERROR EN EL ENVIO. INTENTA DE NUEVO.";
+          diagStatus.className = "terminal-status is-error";
+        }
+      })
+      .catch(function () {
+        diagStatus.textContent = "> ERROR DE CONEXION. INTENTA DE NUEVO.";
+        diagStatus.className = "terminal-status is-error";
+      })
+      .finally(function () {
+        diagSubmit.disabled = false;
+      });
+  });
+
+  // ---- demo de escritura del terminal en la seccion del diagnostico ----
+  (function () {
+    var l1 = document.getElementById("diag-line1");
+    var r1 = document.getElementById("diag-reply1");
+    var l2 = document.getElementById("diag-line2");
+    var l2t = document.getElementById("diag-line2-text");
+    var r2 = document.getElementById("diag-reply2");
+    var section = document.getElementById("diagnostico");
+
+    var text1 = 'preguntar a ChatGPT: "mejor tienda de velas artesanales españa"';
+    var text2 = "orbita9 diagnostico --tienda=tu-tienda.com";
+
+    function typeInto(el, text, cb, speed) {
+      var i = 0;
+      var iv = setInterval(function () {
+        el.textContent = text.slice(0, i + 1);
+        i++;
+        if (i >= text.length) {
+          clearInterval(iv);
+          if (cb) cb();
+        }
+      }, speed || 28);
+    }
+
+    function playDemo() {
+      typeInto(l1, text1, function () {
+        setTimeout(function () {
+          r1.classList.remove("diag-hidden");
+          setTimeout(function () {
+            l2.classList.remove("diag-hidden");
+            typeInto(l2t, text2, function () {
+              setTimeout(function () { r2.classList.remove("diag-hidden"); }, 500);
+            });
+          }, 900);
+        }, 400);
+      });
+    }
+
+    if (reduceMotion) {
+      l1.textContent = text1;
+      l2t.textContent = text2;
+      r1.classList.remove("diag-hidden");
+      l2.classList.remove("diag-hidden");
+      r2.classList.remove("diag-hidden");
+      return;
+    }
+
+    if ("IntersectionObserver" in window) {
+      var played = false;
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting && !played) {
+            played = true;
+            playDemo();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.4 });
+      observer.observe(section);
+    } else {
+      playDemo();
+    }
+  })();
 
   // ---- pixel-art logo bitmaps (8x8), estilo neon retro ----
   var LOGOS = [
@@ -260,8 +393,6 @@
   function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
   function lerp(a, b, t) { return a + (b - a) * t; }
 
-  var liveApplied = false;
-
   function render(p) {
     particles.forEach(function (pt) {
       var local = clamp((p - pt.stagger) / (1 - pt.stagger), 0, 1);
@@ -294,11 +425,6 @@
       }
     });
 
-    var bp = clamp((p - 0.55) / 0.3, 0, 1);
-    var be = easeOutCubic(bp);
-    btn.style.opacity = be.toFixed(2);
-    btn.style.transform = "translate(-50%,-50%) scale(" + lerp(0.2, 1, be).toFixed(2) + ")";
-
     haloItems.forEach(function (h) {
       var ht = clamp((p - 0.72 - h.stagger) / (1 - 0.72 - h.stagger), 0, 1);
       var he = easeOutCubic(ht);
@@ -309,12 +435,6 @@
         : "drop-shadow(0 0 6px currentColor)";
       h.el.style.transform = "translateY(" + lerp(22, 0, he).toFixed(1) + "px) scale(" + lerp(0.7, 1, he).toFixed(2) + ")";
     });
-
-    var shouldBeLive = p > 0.82;
-    if (shouldBeLive !== liveApplied) {
-      btn.classList.toggle("is-live", shouldBeLive);
-      liveApplied = shouldBeLive;
-    }
   }
 
   if (reduceMotion) {
@@ -324,9 +444,6 @@
       h.el.style.filter = "drop-shadow(0 0 6px currentColor)";
       h.el.style.transform = "none";
     });
-    btn.style.opacity = "1";
-    btn.style.transform = "translate(-50%,-50%) scale(1)";
-    btn.classList.add("is-live");
   } else {
     var ticking = false;
 

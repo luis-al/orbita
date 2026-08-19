@@ -10,7 +10,7 @@ tecnológicas a medida para impulsar tu negocio digital. Descubre nuestro trabaj
 <meta name="keywords" content="Orbita9, Barcelona, desarrollo web, aplicaciones IA, inteligencia artificial, diseño
 responsive, tecnología innovadora, soluciones digitales, agencia tecnológica Barcelona">
 
-<link rel="stylesheet" href="style.css?v=20260819b">
+<link rel="stylesheet" href="style.css?v=20260819c">
 </head>
 <body>
 
@@ -42,32 +42,106 @@ responsive, tecnología innovadora, soluciones digitales, agencia tecnológica B
         <!-- logos reales (vector, no pixel) inyectados por JS -->
       </div>
 
-      <button class="contact-btn" id="contact-btn" type="button" aria-label="Abrir formulario de contacto" aria-haspopup="dialog">
-        <svg viewBox="0 0 16 16" class="pixel-icon icon-mail" shape-rendering="crispEdges">
-          <rect x="1" y="3" width="14" height="10" class="c-body"/>
-          <rect x="1" y="3" width="14" height="1" class="c-line"/>
-          <rect x="1" y="12" width="14" height="1" class="c-line"/>
-          <rect x="1" y="3" width="1" height="10" class="c-line"/>
-          <rect x="14" y="3" width="1" height="10" class="c-line"/>
-          <rect x="2" y="4" width="1" height="1" class="c-line"/>
-          <rect x="13" y="4" width="1" height="1" class="c-line"/>
-          <rect x="3" y="5" width="1" height="1" class="c-line"/>
-          <rect x="12" y="5" width="1" height="1" class="c-line"/>
-          <rect x="4" y="6" width="1" height="1" class="c-line"/>
-          <rect x="11" y="6" width="1" height="1" class="c-line"/>
-          <rect x="5" y="7" width="1" height="1" class="c-line"/>
-          <rect x="10" y="7" width="1" height="1" class="c-line"/>
-          <rect x="6" y="8" width="1" height="1" class="c-line"/>
-          <rect x="9" y="8" width="1" height="1" class="c-line"/>
-          <rect x="7" y="9" width="2" height="1" class="c-line"/>
-        </svg>
-        <span class="ring"></span>
-        <span class="ring ring-2"></span>
-      </button>
     </div>
   </section>
 
-  <!-- SECTION 3: panel de contacto retro (terminal 80s) -->
+  <!-- SECTION 3: pitch del diagnostico de visibilidad IA -->
+  <section class="diag-hero" id="diagnostico">
+    <div class="scanlines"></div>
+    <div class="diag-sun"></div>
+    <div class="diag-grid-floor"></div>
+
+    <div class="diag-hero-content">
+      <p class="diag-eyebrow">&gt; orbita9.es_</p>
+
+      <h2 class="diag-headline">
+        ¿ChatGPT recomienda<br>
+        tu tienda <span class="or">o</span><br>
+        a tu competencia<span class="diag-cursor">_</span>?
+      </h2>
+
+      <p class="diag-subhead">
+        Diagnóstico técnico + test real de qué dicen las IAs de tu tienda cuando alguien pregunta.
+        <span class="diag-dim">Sin informes de 40 páginas. Al grano.</span>
+      </p>
+
+      <button type="button" class="cta" id="diagnostico-cta">
+        <span class="cta-bracket">[</span> ¿QUÉ DICE LA IA DE TI? <span class="cta-bracket">]</span>
+      </button>
+
+      <div class="diag-terminal">
+        <div class="diag-terminal-bar">
+          <span class="diag-dot red"></span><span class="diag-dot yellow"></span><span class="diag-dot green"></span>
+          <span class="diag-terminal-title">ai-visibility-test.sh</span>
+        </div>
+        <div class="diag-terminal-body" id="diag-term-body">
+          <p><span class="diag-prompt">$</span> <span id="diag-line1"></span></p>
+          <p id="diag-reply1" class="diag-reply diag-hidden">&gt; "Recomiendo <span class="diag-hl-bad">Velas Nórdicas Co.</span> — no encuentro suficiente información sobre esa tienda."</p>
+          <p id="diag-line2" class="diag-hidden"><span class="diag-prompt">$</span> <span id="diag-line2-text"></span></p>
+          <p id="diag-reply2" class="diag-reply diag-hidden">&gt; diagnóstico generado: <span class="diag-hl-good">7 fixes priorizados</span>. informe listo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: formulario de intake del diagnostico -->
+  <div class="contact-panel" id="diagnostico-panel" aria-hidden="true">
+    <div class="contact-backdrop" id="diagnostico-backdrop"></div>
+    <div class="terminal-window" role="dialog" aria-modal="true" aria-labelledby="diagnostico-title">
+      <div class="terminal-titlebar">
+        <span class="terminal-dot dot-pink"></span>
+        <span class="terminal-dot dot-yellow"></span>
+        <span class="terminal-dot dot-green"></span>
+        <span class="terminal-title" id="diagnostico-title">AI-VISIBILITY-TEST.SH</span>
+        <button class="terminal-close" id="diagnostico-close" type="button" aria-label="Cerrar">X</button>
+      </div>
+      <div class="terminal-body">
+        <p class="terminal-line">&gt; INICIANDO TEST DE VISIBILIDAD IA<span class="blink">_</span></p>
+        <p class="terminal-line">&gt; INTRODUCE LOS DATOS DE TU TIENDA:</p>
+
+        <form id="diagnostico-form" class="terminal-form" autocomplete="off">
+          <label class="terminal-label" for="df-email">EMAIL_CONTACTO:</label>
+          <input class="terminal-input" type="email" id="df-email" name="email" required placeholder="tu@email.com">
+
+          <label class="terminal-label" for="df-url">URL_TIENDA:</label>
+          <input class="terminal-input" type="text" id="df-url" name="url_tienda" required placeholder="https://tu-tienda.com">
+
+          <label class="terminal-label" for="df-nicho">NICHO:</label>
+          <input class="terminal-input" type="text" id="df-nicho" name="nicho" required placeholder="ej. velas artesanales">
+
+          <label class="terminal-label" for="df-competidores">COMPETIDORES (opcional):</label>
+          <input class="terminal-input" type="text" id="df-competidores" name="competidores" placeholder="ej. Tienda A, Tienda B">
+
+          <p class="terminal-line" style="margin-top:16px;">&gt; ¿CON QUÉ QUIERES QUE TE ENCUENTREN? (3 a 5 frases o palabras clave)</p>
+
+          <label class="terminal-label" for="df-q1">PREGUNTA_1 *</label>
+          <input class="terminal-input" type="text" id="df-q1" name="pregunta_1" required placeholder="ej. mejores tiendas de velas en España">
+
+          <label class="terminal-label" for="df-q2">PREGUNTA_2 *</label>
+          <input class="terminal-input" type="text" id="df-q2" name="pregunta_2" required placeholder="ej. donde comprar velas de soja hechas a mano">
+
+          <label class="terminal-label" for="df-q3">PREGUNTA_3 *</label>
+          <input class="terminal-input" type="text" id="df-q3" name="pregunta_3" required placeholder="ej. alternativas a [competidor grande]">
+
+          <label class="terminal-label" for="df-q4">PREGUNTA_4 (opcional)</label>
+          <input class="terminal-input" type="text" id="df-q4" name="pregunta_4" placeholder="">
+
+          <label class="terminal-label" for="df-q5">PREGUNTA_5 (opcional)</label>
+          <input class="terminal-input" type="text" id="df-q5" name="pregunta_5" placeholder="">
+
+          <input type="text" name="_gotcha" class="terminal-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="hidden" name="_subject" value="Nuevo diagnostico IA solicitado">
+
+          <button type="submit" class="terminal-submit" id="df-submit">
+            <span>&gt; ENVIAR_DIAGNOSTICO</span>
+          </button>
+          <p class="terminal-status" id="df-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: panel de contacto retro general (terminal 80s) -->
   <div class="contact-panel" id="contact-panel" aria-hidden="true">
     <div class="contact-backdrop" id="contact-backdrop"></div>
     <div class="terminal-window" role="dialog" aria-modal="true" aria-labelledby="terminal-title">
@@ -100,6 +174,6 @@ responsive, tecnología innovadora, soluciones digitales, agencia tecnológica B
     </div>
   </div>
 
-<script src="script.js?v=20260819b"></script>
+<script src="script.js?v=20260819c"></script>
 </body>
 </html>
